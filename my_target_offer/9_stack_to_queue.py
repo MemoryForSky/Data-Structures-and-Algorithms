@@ -19,6 +19,7 @@ class Cqueue:
         self.stack1 = []
         self.stack2 = []
 
+    # 复杂度高: 需要pop --> insert两次
     def push(self, data):
         while self.stack1:
             self.stack2.insert(0, self.stack1.pop(0))
@@ -32,19 +33,33 @@ class Cqueue:
         else:
             return None
 
-    def empty(self):
+    # 复杂度低: 只需pop --> insert一次
+    def push2(self, data):
+        self.stack2.insert(0, data)
+
+    def pop2(self):
         if len(self.stack1) == 0:
+            while self.stack2:
+                self.stack1.insert(0, self.stack2.pop(0))
+
+        if len(self.stack1) == 0:
+            return None
+        else:
+            return self.stack1.pop(0)
+
+    def empty(self):
+        if len(self.stack1) == 0 and len(self.stack2) == 0:
             return False
         else:
             return True
 
 if __name__ == '__main__':
     q = Cqueue()
-    q.push(1)
-    q.push(2)
-    q.push(3)
+    q.push2(1)
+    q.push2(2)
+    q.push2(3)
     while q.empty():
-        print(q.pop())
+        print(q.pop2())
 
 
 
