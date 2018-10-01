@@ -1,3 +1,7 @@
+"""
+输入一个链表，从尾到头打印链表每个节点的值。
+"""
+
 class Node:
     def __init__(self, x):
         self.val = x
