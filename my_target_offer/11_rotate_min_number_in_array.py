@@ -66,3 +66,4 @@ if __name__ == '__main__':
     # target = S.min(array1, 0, len(array1)-1)
     target = S.min2(array2)
     print(target)
+
