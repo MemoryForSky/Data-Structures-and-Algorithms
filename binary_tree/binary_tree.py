@@ -40,8 +40,6 @@ class Solution:
     def node_count(self, node):
         """
         求二叉树中节点的个数
-        :param node:
-        :return:
         """
         if node is None:
             return 0
@@ -66,13 +64,16 @@ class Solution:
 
         return left + right
 
-
-# 求二叉树中第k层节点的个数
-    def k_level_count(self):
+    def k_level_count(self, node):
+        """
+        求二叉树中第k层节点的个数
+        """
         pass
 
-# 判断二叉树是否是平衡二叉树
     def is_balance_binary_tree(self):
+        """
+        判断二叉树是否是平衡二叉树
+        """
         pass
 
 # 判断二叉树是否是完全二叉树
