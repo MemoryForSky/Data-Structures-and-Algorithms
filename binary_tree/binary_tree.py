@@ -1,3 +1,6 @@
+import math
+import queue
+
 class TreeNode:
     """
     二叉树节点
@@ -64,43 +67,176 @@ class Solution:
 
         return left + right
 
-    def k_level_count(self, node):
+    def k_level_count(self, node, k):
         """
         求二叉树中第k层节点的个数
         """
-        pass
+        if k < 1 or node is None:
+            return 0
 
-    def is_balance_binary_tree(self):
+        if k == 1:
+            return 1
+
+        left = self.k_level_count(node.left, k-1)
+        right = self.k_level_count(node.right, k-1)
+
+        return left + right
+
+    def is_balance_binary_tree(self, node):
         """
         判断二叉树是否是平衡二叉树
         """
+        return self.max_depth2(node) != -1
+
+    def max_depth2(self, node):
+        """
+        检查树是否平衡
+        """
+        if node is None:
+            return 0
+
+        left = self.max_depth2(node.left)
+        right = self.max_depth2(node.right)
+        if left == -1 or right == -1 or math.fabs(left - right) > 1:
+            return -1
+
+        return max(left, right) + 1
+
+    @staticmethod
+    def is_complete_binary_tree(node):
+        """
+        判断二叉树是否是完全二叉树：层次遍历，如果一个节点缺少孩子，则剩下的节点都应该没有孩子。
+        """
+        if node is None:
+            return True
+
+        _queue = queue.Queue()
+        _queue.put(node)
+        has_no_child = False
+        result = True
+        while not _queue.empty():
+            current_node = _queue.get()
+            if not has_no_child:
+                if current_node.left is not None and current_node.right is not None:
+                    _queue.put(current_node.left)
+                    _queue.put(current_node.right)
+                elif current_node.left is None and current_node.right is not None:
+                    result = False
+                    break
+                elif current_node.left is not None and current_node.right is None:
+                    _queue.put(current_node.left)
+                    has_no_child = True
+                else:
+                    has_no_child = True
+            else:
+                if current_node.left is not None or current_node.right is not None:
+                    result = False
+                    break
+        return result
+
+    def is_common_tree(self, node1, node2):
+        """
+        两个二叉树是否完全相同
+        """
+        if node1 is None and node2 is None:
+            return True
+        elif node1 is None or node2 is None:
+            return False
+
+        if node1.val != node2.val:
+            return False
+
+        left = self.is_common_tree(node1.left, node2.left)
+        right = self.is_common_tree(node1.right, node2.right)
+
+        return left and right
+
+    def is_mirror(self, node1, node2):
+        """
+        两个二叉树是否互为镜像
+        """
+        if node1 is None and node2 is None:
+            return True
+        elif node1 is None or node2 is None:
+            return False
+
+        if node1.val != node2.val:
+            return False
+
+        left = self.is_mirror(node1.left, node2.right)
+        right = self.is_mirror(node1.right, node2.left)
+
+        return left and right
+
+    def mirror_tree_node(self, node):
+        """
+        翻转二叉树 or 镜像二叉树
+        """
+        if node is None:
+            return None
+
+        left = self.mirror_tree_node(node.left)
+        right = self.mirror_tree_node(node.right)
+
+        # 每次都新建节点，不然会修改原始链表
+        new_node = TreeNode(node.val)
+        new_node.left = right
+        new_node.right = left
+        return new_node
+
+    def get_last_common_parent(self):
+        """
+        求两个二叉树的最低公共祖先节点
+        """
         pass
 
-# 判断二叉树是否是完全二叉树
-    def is_complete_binary_tree(self):
-        pass
+    def pre_order(self, node):
+        """
+        二叉树的先序遍历
+        """
+        result = []
+        self.pre(node, result)
+        return result
 
-# 两个二叉树是否完全相同
-    def is_common_tree(self):
-        pass
+    def pre(self, node, result):
+        if node is None:
+            return
 
-# 两个二叉树是否互为镜像
+        result.append(node.val)
+        self.pre(node.left, result)
+        self.pre(node.right, result)
 
+    def in_order(self, node):
+        """
+        二叉树的中序遍历
+        """
+        result = []
+        self.inside(node, result)
+        return result
 
-# 翻转二叉树 or 镜像二叉树
+    def inside(self, node, result):
+        if node is None:
+            return
 
+        self.inside(node.left, result)
+        result.append(node.val)
+        self.inside(node.right, result)
 
-# 求两个二叉树的最低公共祖先节点
+    def post_order(self, node):
+        """
+        二叉树的后序遍历
+        """
+        result = []
+        self.post(node, result)
+        return result
 
+    def post(self, node, result):
+        if node is None:
+            return
 
-# 二叉树的前序遍历
-
-
-# 二叉树的中序遍历
-
-
-# 二叉树的后序遍历
-
+        self.post(node.left, result)
+        self.post(node.right, result)
+        result.append(node.val)
 
 # 前序遍历和后序遍历构造二叉树
 
@@ -113,9 +249,25 @@ class Solution:
 
 # 二叉树的搜索区间
 
+    @staticmethod
+    def level_order(node):
+        """
+        二叉树的层次遍历
+        """
+        if node is None:
+            return
 
-# 二叉树的层次遍历
-
+        result = []
+        _queue = queue.Queue()
+        _queue.put(node)
+        while not _queue.empty():
+            current_node = _queue.get()
+            result.append(current_node.val)
+            if current_node.left is not None:
+                _queue.put(current_node.left)
+            if current_node.right is not None:
+                _queue.put(current_node.right)
+        return result
 
 # 二叉树内两个节点的最长距离
 
@@ -128,8 +280,18 @@ class Solution:
 
 if __name__ == '__main__':
     """
-    
+    tree1:                   tree2:
+               a                    a         
+            /     \              /     \      
+           b        c           b        c    
+          / \      / \         / \      /     
+         d   e    f   g       d   e    f      
+        /   / \              /   / \          
+       k   h   i            k   h   i         
+          /                                   
+         j                                    
     """
+    # tree1
     node_a = TreeNode("a")
     node_b = TreeNode("b")
     node_c = TreeNode("c")
@@ -139,6 +301,7 @@ if __name__ == '__main__':
     node_g = TreeNode("g")
     node_h = TreeNode("h")
     node_i = TreeNode("i")
+    node_j = TreeNode("j")
     node_k = TreeNode("k")
     node_a.left = node_b
     node_a.right = node_c
@@ -146,14 +309,37 @@ if __name__ == '__main__':
     node_b.right = node_e
     node_c.left = node_f
     node_c.right = node_g
+    node_d.left = node_k
     node_e.left = node_h
     node_e.right = node_i
-    node_h.left = node_k
+    node_h.left = node_j
 
-    root = node_a
+    # tree2
+    node2_a = TreeNode("a")
+    node2_b = TreeNode("b")
+    node2_c = TreeNode("c")
+    node2_d = TreeNode("d")
+    node2_e = TreeNode("e")
+    node2_f = TreeNode("f")
+    node2_h = TreeNode("h")
+    node2_i = TreeNode("i")
+    node2_k = TreeNode("k")
+    node2_a.left = node2_b
+    node2_a.right = node2_c
+    node2_b.left = node2_d
+    node2_b.right = node2_e
+    node2_c.left = node2_f
+    node2_d.left = node2_k
+    node2_e.left = node2_h
+    node2_e.right = node2_i
+
+
+    root1 = node_a
+    root2 = node2_a
     S = Solution()
 
     #-----------------Test-----------------
+    '''
     print("****** Test max depth: ******")
     max_depth = S.max_depth(node_b)
     print("max depth is: ", max_depth)
@@ -169,3 +355,65 @@ if __name__ == '__main__':
     print("****** Test leaf node count: ******")
     leaf_node_count = S.leaf_node_count(root)
     print("leaf node count is: ", leaf_node_count)
+
+    print("****** Test k level count: ******")
+    k_level_count = S.k_level_count(root, 5)
+    print("k level count is: ", k_level_count)
+
+    print("****** Test binary tree is balance: ******")
+    is_balance_binary_tree = S.is_balance_binary_tree(node_e)
+    print("binary tree is balance: ", is_balance_binary_tree)
+    
+
+    print("****** Test binary tree is complete: ******")
+    is_complete_binary_tree = S.is_complete_binary_tree(node_j)
+    print("binary tree is complete: ", is_complete_binary_tree)
+
+    print("****** Test tree1 and tree2 is common tree: ******")
+    is_common_tree = S.is_common_tree(node_d, node2_d)
+    print("binary tree is common tree: ", is_common_tree)
+    
+    node1_a = TreeNode('a')
+    node1_b = TreeNode('b')
+    node1_c = TreeNode('c')
+    node1_a.left = node1_b
+    node1_a.right = node1_c
+
+    node2_a = TreeNode('a')
+    node2_b = TreeNode('b')
+    node2_c = TreeNode('c')
+    node2_a.left = node2_c
+    node2_a.right = node2_b
+    print("****** Test tree1 and tree2 is mirror: ******")
+    is_mirror = S.is_mirror(node1_a, node2_a)
+    print("binary tree is mirror: ", is_mirror)
+
+    print("****** Test binary tree's mirror tree node: ******")
+    mirror_tree = S.mirror_tree_node(root1)
+    is_mirror = S.is_mirror(root1, mirror_tree)
+    print("binary tree is mirror: ", is_mirror)
+    '''
+
+    print("****** Test binary tree's level order: ******")
+    level_order = S.level_order(root1)
+    print("binary tree level order is: \n", level_order)
+
+    print("****** Test binary tree's pre order: ******")
+    pre_order = S.pre_order(root1)
+    print("binary tree pre order is: \n", pre_order)
+
+    print("****** Test binary tree's in order: ******")
+    in_order = S.in_order(root1)
+    print("binary tree in order is: \n", in_order)
+
+    print("****** Test binary tree's post order: ******")
+    post_order = S.post_order(root1)
+    print("binary tree post order is: \n", post_order)
+
+
+
+
+
+
+
+
