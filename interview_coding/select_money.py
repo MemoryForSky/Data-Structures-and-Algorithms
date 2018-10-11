@@ -48,11 +48,12 @@ import time
 
 def get_n(n, m, money_list):
     """
+    递归解法
 
-    :param n:
-    :param m:
-    :param money_list:
-    :return:
+    :param n: 总钱数
+    :param m: 纸币种类
+    :param money_list: 纸币数组
+    :return: 不同组合个数
     """
     if n == 0:
         return 1
@@ -67,18 +68,19 @@ def get_n(n, m, money_list):
 
     return count
 
-def get_n_dp(n, a):
+def get_n_dp(n, money_list):
     """
+    循环（动态规划）
 
-    :param n:
-    :param a:
-    :return:
+    :param n: 总钱数
+    :param money_list: 纸币数组
+    :return: 不同组合个数
     """
     dp = [1] * (n + 1)
     for i in range(1, 6):
         for j in range(0, n + 1):
-            if j >= a[i]:
-                dp[j] = dp[j] + dp[j - a[i]]
+            if j >= money_list[i]:
+                dp[j] = dp[j] + dp[j - money_list[i]]
     return dp[-1]
 
 

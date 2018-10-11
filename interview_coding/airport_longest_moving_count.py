@@ -90,7 +90,7 @@ class Solution:
         if matrix[row][col] > H:
             return False
 
-        if row == rows-1 or col == cols-1:
+        if row == 0 or col == 0 or row == rows-1 or col == cols-1:
             return True
 
         is_ocean = self.verify(matrix, rows, cols, row, col - 1, H) \
