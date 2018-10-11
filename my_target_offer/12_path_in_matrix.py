@@ -25,7 +25,7 @@ class Solution:
             return True
 
         has_path = False
-        if row >= 0 and row < rows and col >= 0 and col < cols and matrix[row*cols + col] == str[str_index] \
+        if 0 <= row < rows and 0 <= col < cols and matrix[row*cols + col] == str[str_index] \
                 and visits[row*cols + col] == 0:
             str_index += 1
             visits[row*cols + col] = 1

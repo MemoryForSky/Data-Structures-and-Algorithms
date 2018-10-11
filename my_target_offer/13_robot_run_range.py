@@ -41,10 +41,12 @@ class Solution:
         if self.check(threshold, rows, cols, row, col, visits):
             visits[row*cols+col] = 1
 
+            # 连续行走，只需要一行递归语句，行走距离累加
             moving_count = 1 + self.moving_count_core(threshold, rows, cols, row - 1, col, visits) \
                     + self.moving_count_core(threshold, rows, cols, row, col - 1, visits) \
                     + self.moving_count_core(threshold, rows, cols, row + 1, col, visits) \
                     + self.moving_count_core(threshold, rows, cols, row, col + 1, visits)
+
         return moving_count
 
     def check(self, threshold, rows, cols, row, col, visits):
