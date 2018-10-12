@@ -30,6 +30,7 @@ class Solution:
         if str1 == "" and str2 == "":
             return 0
 
+        # 自下而上循环
         for i in range(1, len1 + 1):
             for j in range(1, len2 + 1):
                 if str1[i-1] == str2[j-1]:
@@ -62,6 +63,9 @@ class Solution:
             self.print_lcs(len1, len2-1)
 
     def print_lcs_loop(self, len1, len2):
+        """
+        输出一个最长子序列(循环方式)
+        """
         str1 = self.str1
         vecb = self.vecb
         res = []
@@ -92,6 +96,7 @@ class Solution:
         str1 = self.str1
         str2 = self.str2
 
+        # 自上而下递归
         if str1[len1] == str2[len2]:
             count = self.lcs_rec_core(len1 + 1, len2 + 1) + 1
         else:
