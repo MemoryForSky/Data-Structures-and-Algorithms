@@ -33,7 +33,7 @@ import random
 时间复杂度：O(nlog(n))
 """
 
-def Patition(data, data_len, start, end):
+def Patition(data, start, end):
     index = random.randint(start, end)
     data[index], data[end] = data[end], data[index]
 
@@ -50,15 +50,15 @@ def Patition(data, data_len, start, end):
     return smallIndex
 
 
-def quickSort(data, data_len, start, end):
+def quickSort(data, start, end):
     if start == end:
         return 0
 
-    index = Patition(data, data_len, start, end)
+    index = Patition(data, start, end)
     if index > start:
-        quickSort(data, data_len, start, index - 1)
+        quickSort(data, start, index - 1)
     if index < end:
-        quickSort(data, data_len, index + 1, end)
+        quickSort(data, index + 1, end)
 
 
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     data_len = len(data)
     print("before sort:", data)
 
-    quickSort(data, data_len, 0, data_len - 1)
+    quickSort(data, 0, data_len - 1)
     # bubbleSort(data, data_len)
 
     print("after sort:", data)

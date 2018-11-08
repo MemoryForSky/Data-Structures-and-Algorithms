@@ -11,7 +11,6 @@ class Solution:
         cols = len(matrix[0])
 
 
-
     def print_matrix_in_circle(self, matrix):
         pass
 
