@@ -1,2 +1,3 @@
-x = 7
-print(x >> 1)
+x = float('inf')
+if x == float('inf'):
+    print(1)
