@@ -55,7 +55,7 @@ class Solution:
 
             # 迭代公式：1、递归
             sub_str = "".join(str_list[:i]) + "".join(str_list[i+1:])
-            temp = self.permutation(sub_str)
+            temp = self.permutation2(sub_str)
 
             # 2、合并字符
             for j in temp:
@@ -137,13 +137,13 @@ class Solution:
 
 
 if __name__ == "__main__":
-    string = "abc"
+    string = [1, 2, 3]
 
     S = Solution()
 
-    # permu_list = S.permutation(string)
-    # print("permutation: ", permu_list)
-    #
+    S.permutation(string)
+    print("permutation: ", S.result)
+
     # group_list = S.group(string)
     # print("group: ", group_list)
 
@@ -153,10 +153,10 @@ if __name__ == "__main__":
     # print("对于正方体的八个顶点，对面顶点和相等的排列：")
     # S.cube_equal(S.result)
 
-    queue = [0, 1, 2, 3, 4, 5, 6, 7]
-    S.permutation(queue)
-    queue_result = S.queue_8(S.result)
-    print(len(queue_result))
+    # queue = [0, 1, 2, 3, 4, 5, 6, 7]
+    # S.permutation(queue)
+    # queue_result = S.queue_8(S.result)
+    # print(len(queue_result))
 
 
 

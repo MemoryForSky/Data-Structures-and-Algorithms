@@ -1,5 +1,6 @@
 import math
 import queue
+import copy
 
 class TreeNode:
     """
@@ -15,6 +16,9 @@ class Solution:
     """
     二叉树的求解：递归 + 迭代
     """
+    def __init__(self):
+        self.result = []
+
     def max_depth(self, node):
         """
         求二叉树的最大深度
@@ -244,8 +248,45 @@ class Solution:
 # 在二叉树中插入节点
 
 
-# 输入一个二叉树和一个整数，打印出二叉树中节点值的和等于输入整数所有的路径
+    def find_path2(self, node, sum):
+        sum -= node.val
+        self.result.append(node.val)
 
+        if node.left is None and node.right is None and sum == 0:
+            print(self.result)
+
+        if node.left is not None:
+            self.find_path2(node.left, sum)
+        if node.right is not None:
+            self.find_path2(node.right, sum)
+        if len(self.result) != 0:
+            self.result.pop(-1)
+
+    def find_path(self, node, sum):
+        """输入一个二叉树和一个整数，打印出二叉树中节点值的和等于输入整数所有的路径"""
+        if node is None:
+            return
+
+        stack = []
+        path_sum = 0
+
+        self.find_sum_core(node, sum, stack, path_sum)
+
+    def find_sum_core(self, node, sum, stack, path_sum):
+        stack.append(node.val)
+        path_sum += node.val
+
+        if node.left is None and node.right is None:
+            if path_sum == sum:
+                self.result.append(copy.deepcopy(stack))
+
+        if node.left is not None:
+            self.find_sum_core(node.left, sum, stack, path_sum)
+
+        if node.right is not None:
+            self.find_sum_core(node.right, sum, stack, path_sum)
+
+        stack.pop(-1)
 
 # 二叉树的搜索区间
 
@@ -355,11 +396,14 @@ if __name__ == '__main__':
     print("****** Test leaf node count: ******")
     leaf_node_count = S.leaf_node_count(root)
     print("leaf node count is: ", leaf_node_count)
+    '''
+
 
     print("****** Test k level count: ******")
-    k_level_count = S.k_level_count(root, 5)
+    k_level_count = S.k_level_count(node_a, 1)
     print("k level count is: ", k_level_count)
 
+    '''
     print("****** Test binary tree is balance: ******")
     is_balance_binary_tree = S.is_balance_binary_tree(node_e)
     print("binary tree is balance: ", is_balance_binary_tree)
@@ -392,7 +436,6 @@ if __name__ == '__main__':
     mirror_tree = S.mirror_tree_node(root1)
     is_mirror = S.is_mirror(root1, mirror_tree)
     print("binary tree is mirror: ", is_mirror)
-    '''
 
     print("****** Test binary tree's level order: ******")
     level_order = S.level_order(root1)
@@ -409,6 +452,30 @@ if __name__ == '__main__':
     print("****** Test binary tree's post order: ******")
     post_order = S.post_order(root1)
     print("binary tree post order is: \n", post_order)
+    '''
+
+    '''
+    node1 = TreeNode(1)
+    node2 = TreeNode(2)
+    node3 = TreeNode(3)
+    node4 = TreeNode(4)
+    node5 = TreeNode(7)
+    node6 = TreeNode(6)
+    node7 = TreeNode(7)
+
+    node1.left = node2
+    node1.right = node3
+    node2.left = node4
+    node2.right = node5
+    node3.left = node6
+    node3.right = node7
+
+    print("****** Test the link of sum is target: ******")
+    S.find_path(node1, 10)
+    print(S.result)
+
+    '''
+
 
 
 
