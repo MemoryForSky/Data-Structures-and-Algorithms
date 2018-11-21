@@ -14,9 +14,8 @@ class Solution:
             else:
                 nums_dict[target - nums[i]] = i
 
-
-
-    def two_sum2(self, nums, target):
+    @staticmethod
+    def two_sum2(nums, target):
         """
         使用双指针
 
@@ -34,6 +33,7 @@ class Solution:
             else:
                 start += 1
 
+    @staticmethod
     def three_sum(self, nums, target):
         for i in range(len(nums)):
             remain = target - nums[i]
