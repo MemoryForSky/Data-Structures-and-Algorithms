@@ -396,12 +396,11 @@ if __name__ == '__main__':
     print("****** Test leaf node count: ******")
     leaf_node_count = S.leaf_node_count(root)
     print("leaf node count is: ", leaf_node_count)
-    '''
-
-
+    
     print("****** Test k level count: ******")
     k_level_count = S.k_level_count(node_a, 1)
     print("k level count is: ", k_level_count)
+    '''
 
     '''
     print("****** Test binary tree is balance: ******")
@@ -454,7 +453,7 @@ if __name__ == '__main__':
     print("binary tree post order is: \n", post_order)
     '''
 
-    '''
+
     node1 = TreeNode(1)
     node2 = TreeNode(2)
     node3 = TreeNode(3)
@@ -470,11 +469,12 @@ if __name__ == '__main__':
     node3.left = node6
     node3.right = node7
 
-    print("****** Test the link of sum is target: ******")
+    print("****** Test the path of sum is target: ******")
     S.find_path(node1, 10)
     print(S.result)
 
-    '''
+
+
 
 
 
