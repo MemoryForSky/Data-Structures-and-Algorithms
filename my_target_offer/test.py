@@ -1,11 +1,18 @@
-x = -10
-base = 1
-x_list = [0] * 32
-for i in range(31, -1, -1):
-    if x & base != 0:
-        x_list[i] += 1
-    base <<= 1
+import numpy as np
 
-print(x_list)
+x = np.array([[[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]],
 
-print(-10 & 2)
+              [[11, 21, 31],
+               [41, 51, 61],
+               [71, 81, 91]],])
+
+i = np.array([[[0],
+               [1]]])
+
+j = np.array([[[0, 1, 2]]])
+
+z = np.array([[0]])
+
+print("x[i, j] = ", x[i, j, z])
