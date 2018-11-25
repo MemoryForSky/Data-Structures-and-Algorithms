@@ -6,6 +6,7 @@
 
 """
 
+
 class Solution:
     def sum(self):
         pass
